@@ -17,9 +17,9 @@ string (REGEX REPLACE "[\n\t\r]" "" GIT_DATETIME ${GIT_DATETIME})
 string (REGEX REPLACE "[\n\t\r]" "" BUILD_DATETIME ${BUILD_DATETIME})
 message("git版本:" ${GIT_VERSION} ";  git日期:" ${GIT_DATETIME} ";  编译日期:" ${BUILD_DATETIME})
 # 增加编译选项，把宏导入源码
-add_definitions(-DGIT_VERSION=${GIT_VERSION})
-add_definitions(-DGIT_DATETIME=${GIT_DATETIME})
-add_definitions(-DBUILD_DATETIME=${BUILD_DATETIME})
+add_definitions( -DGIT_VERSION=${GIT_VERSION})
+add_definitions( -DGIT_DATETIME=${GIT_DATETIME})
+add_definitions( -DBUILD_DATETIME=${BUILD_DATETIME})
 
 ########################################################################
 
@@ -27,28 +27,29 @@ add_definitions(-DBUILD_DATETIME=${BUILD_DATETIME})
 #ADD_SUBDIRECTORY(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 #SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
-set(SOURCES gbus_demo.c)
+set(SOURCES demo_main.c)
+
 file(GLOB SOURCES "*.c")
 
 set (INCLUDE_DIR /usr/include/glib-2.0
         /usr/lib64/glib-2.0/include
         /usr/include/gio-unix-2.0/)
-include_directories(${INCLUDE_DIR})
+
+include_directories(${INCLUDE_DIR} include)
 
 set (LIBS gio-2.0 gobject-2.0 glib-2.0)
-#link_directories( ~/exploringBB/extras/cmake/studentlib_shared/build )
-#set ( PROJECT_LINK_LIBS libtestStudent.a )
 #link_directories( ~/exploringBB/extras/cmake/studentlib_static/build )
-
-include_directories( ${INCLUDE_DIR})
 
 #aux_source_directory(. SRC)
 #add_subdirectory(Child)
-
+add_subdirectory(src)
 ###########################################################################
 set(BIN demo)
 add_executable(${BIN} ${SOURCES})
-target_link_libraries(${BIN} ${LIBS})
+target_link_libraries(${BIN} ${LIBS} ${LIBSRC})
+#set(EXECUTABLE_OUTPUT_PATH ${Project_binary_dir}/bin)
+#set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
+
 #SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../bin/)
 
 #aux_source_directory(. DIR_LIB_SRCS)
