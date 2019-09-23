@@ -1,0 +1,28 @@
+cc = gcc
+include_dir = -I/usr/include/glib-2.0 \
+	-I/usr/lib64/glib-2.0/include \
+	-I/usr/include/gio-unix-2.0/
+
+libs = -lgio-2.0 -lgobject-2.0 -lglib-2.0
+
+CFLAGS = -g -Wall $(include_dir)
+
+
+bin = demo
+
+src = gbus_demo.c
+
+objs = $(src:%.c=%.o)
+
+all = $(bin)
+
+##########################################################
+$(bin):$(objs)
+	$(cc)  $(CFLAGS) $(objs) -o $(bin) $(libs)
+
+$(objs): $(src)
+	$(cc) $(CFLAGS) -c $< -o $@ $(libs)
+
+clean:
+	rm -rf $(obj) $(bin)
+
