@@ -2,7 +2,7 @@ TOP_DIR=$(pwd)
 PACKAGE_DIR=${TOP_DIR}/package
 TAR_NAME=demo.tar.gz
 RPM_MACRO_FILE=/usr/lib/rpm/macros
-RPM_INSTALL_DIR=/home/demo
+RPM_INSTALL_DIR=/home/a
 #################################################
 # mk demo
 ###############################################
@@ -28,6 +28,8 @@ echo "%_topdir /home/code/debug/test/package" > ~/.rpmmacros
 sed -i.bak 's/%__check_files/#%__check_files/g' ${RPM_MACRO_FILE}
 
 #build source an bin
+#-target=CPU-VENDOR-OS #确定包的最终使用平台 eg:--target=i686
+#-ba 二进制和源码 -bb 二进制
 rpmbuild -ba  ${PACKAGE_DIR}/SPECS/demo.spec
 
 #recover check for install
@@ -38,5 +40,8 @@ rm -rf ${RPM_MACRO_FILE}.bak
 # watch package is ok
 ##########################
 rpm -qlp ${PACKAGE_DIR}/RPMS/x86_64/*
+rpm -e suite-debuginfo-1.0.0-1.x86_64
+rpm -e suite-1.0.0-1.x86_64
 rpm -ivh ${PACKAGE_DIR}/RPMS/x86_64/suite*
 ls -l ${RPM_INSTALL_DIR}/*
+

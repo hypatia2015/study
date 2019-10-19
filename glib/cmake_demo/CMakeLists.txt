@@ -1,6 +1,6 @@
 project (Demo)
 #set(CMAKE_BUILD_TYPE Release)
-
+SET(CMAKE_CXX_COMPILER /usr/bin/g++)
 
 #########################################################################
 #set (Tutorial_VERSION_MAJOR 1)
@@ -22,9 +22,6 @@ add_definitions( -DGIT_DATETIME=${GIT_DATETIME})
 add_definitions( -DBUILD_DATETIME=${BUILD_DATETIME})
 
 ########################################################################
-
-#ADD_SUBDIRECTORY(src temp)
-#ADD_SUBDIRECTORY(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 #SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
 #SET(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/lib)
 set(SOURCES demo_main.c)
@@ -33,24 +30,20 @@ file(GLOB SOURCES "*.c")
 
 set (INCLUDE_DIR /usr/include/glib-2.0
         /usr/lib64/glib-2.0/include
-        /usr/include/gio-unix-2.0/)
-
-include_directories(${INCLUDE_DIR} include)
+        /usr/include/gio-unix-2.0/
+	/home/code/debug/study/glib/cmake_demo/include)
 
 set (LIBS gio-2.0 gobject-2.0 glib-2.0)
-#link_directories( ~/exploringBB/extras/cmake/studentlib_static/build )
 
+#link_directories(src)
+#link_libraries(LIBSRC)
 #aux_source_directory(. SRC)
-#add_subdirectory(Child)
+
+#ADD_SUBDIRECTORY(source_dir [binary_dir] [EXCLUDE_FROM_ALL])
 add_subdirectory(src)
+include_directories(${INCLUDE_DIR} include src)
 ###########################################################################
 set(BIN demo)
+
 add_executable(${BIN} ${SOURCES})
-target_link_libraries(${BIN} ${LIBS} ${LIBSRC})
-#set(EXECUTABLE_OUTPUT_PATH ${Project_binary_dir}/bin)
-#set(LIBRARY_OUTPUT_PATH ${PROJECT_BINARY_DIR}/bin)
-
-#SET(EXECUTABLE_OUTPUT_PATH ${PROJECT_BINARY_DIR}/../bin/)
-
-#aux_source_directory(. DIR_LIB_SRCS)
-#add_library(testStudent SHARED ${SOURCES})
+target_link_libraries(${BIN} ${LIBS} LIBSRC)

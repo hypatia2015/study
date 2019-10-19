@@ -5,6 +5,7 @@ extern "C" {
 #endif
   void export_demo_gio();
   void export_demo_core();
+  void export_demo_net();
 
 #ifdef __cplusplus
 }

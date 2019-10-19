@@ -10,7 +10,7 @@ CFLAGS = -g -Wall $(include_dir)
 
 bin = demo
 
-src = gbus_demo.c
+src = src/gbus_core.c
 
 objs = $(src:%.c=%.o)
 

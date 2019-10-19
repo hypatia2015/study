@@ -18,7 +18,7 @@ main(int agrc, char **argv)
 
   get_version();
 
-  //export_demo_gbus();
+  export_demo_core();
 
   return ret;
 }
